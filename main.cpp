@@ -4,8 +4,6 @@
 
 using namespace std;
 
-//void walka(Entity *wsk);
-
 int main()
 {
 	Player p1(100, 20, 1, 0, "Wojownik", 100);
@@ -18,4 +16,3 @@ int main()
 
 	walka(wsk, p1, e1);
 }
-

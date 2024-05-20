@@ -31,7 +31,15 @@ void walka(Entity *&wsk, Player &p, Enemy &e)
         wsk->pokaz_zycie();
 
         cout << "1. Atak\n" << "2. Czar\n";
-        cin >> wybor;
+        for(;;)
+        {
+            if (!(cin >> wybor) || wybor > 2 || wybor < 1)
+            {
+                cout << "Zly rodzaj ruchu, sproboj jeszcze raz\n";
+                cin.clear();
+                cin.ignore(1000, '\n');
+            } else break;
+        }
     
         if (wybor == 1)
         {
@@ -43,19 +51,12 @@ void walka(Entity *&wsk, Player &p, Enemy &e)
             p.czar();
         }
 
-        else
-        {
-            //walidacja
-        }
-
         zmien_ture(wsk, p, e);
         
         if(wsk->czy_martwy() == true)
         {
             p.wygrana(e);
         }
-
-        wsk->pokaz_zycie(); //potem usuń
 
         e.Atak(p);  
 
@@ -88,7 +89,7 @@ bool Entity::czy_martwy()
 void Entity::pokaz_zycie()
 {
     cout << nazwa << "\n";
-    cout << "zycie: " << zycie << "\n\n";
+    cout << "zycie: " << zycie << "\n";
 }
 
 //metody Enemy
@@ -160,6 +161,7 @@ bool Player::czy_martwy()
 void Player::pokaz_zycie()
 {
     Entity::pokaz_zycie();
+    cout << "Mana: " << mana << "\n";
 }
 
 void Player::czar()
