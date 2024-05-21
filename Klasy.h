@@ -51,6 +51,6 @@ public:
 	void Atak(Enemy &e);
 	void level_up(Enemy e);
 	bool czy_martwy();
-	void wygrana(Enemy e);
+	bool wygrana(Enemy e);
 	void pokaz_zycie();
 };

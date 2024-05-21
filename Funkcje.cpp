@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <Windows.h>
 #include "Klasy.h"
 
 //reszta funkcji
@@ -14,15 +15,15 @@ Entity* zmien_ture(Entity *&wsk, Player &p, Enemy &e)
 
 void walka(Entity *&wsk, Player &p, Enemy &e)
 {
-    system("cls");
-
     int wybor;
 
     cout << "Spotykasz wroga!\n";
+    Sleep(1500);
 
-    for (int i = 0; i < 20; i++)
+    for(;;)
     {
-        if(wsk->czy_martwy() == true)
+        system("cls");
+        if(wsk->czy_martwy())
         {
             p.game_over();
         }
@@ -53,17 +54,18 @@ void walka(Entity *&wsk, Player &p, Enemy &e)
 
         zmien_ture(wsk, p, e);
         
-        if(wsk->czy_martwy() == true)
+        if(wsk->czy_martwy())
         {
-            p.wygrana(e);
+            if(p.wygrana(e))
+            {
+                break;
+            }
         }
 
         e.Atak(p);  
 
         zmien_ture(wsk, p, e);
     }
-
-    cout << "Przeciwnik ucieka z powrotem do lasu, nic nie dostajesz";
 }
 
 //metody Entity
@@ -103,6 +105,7 @@ void Enemy::Atak(Player &p)
 {
     cout << nazwa << " atakuje " << p.nazwa << " z sila " << atak << "\n";
     p.zycie = p.zycie - atak;
+    Sleep(1000);
 }
 
 bool Enemy::czy_martwy()
@@ -125,7 +128,7 @@ void Enemy::pokaz_zycie()
 
 void Player::game_over()
 {
-	cout << "Game over, Christopher";
+	cout << "Game over";
 	exit(0);
 }
 
@@ -133,6 +136,7 @@ void Player::Atak(Enemy &e)
 {
     cout << nazwa << " atakuje " << e.nazwa << " z sila " << atak << "\n";
     e.zycie = e.zycie - atak;
+    Sleep(1000);
 }
 
 void Player::level_up(Enemy e)
@@ -142,15 +146,16 @@ void Player::level_up(Enemy e)
     {
         cout << nazwa << " awansuje na " << level+1 << " poziom!\n";
         exp = exp - 15;
-        level = level + 1; 
+        level = level + 1;
     }
-    exit(0);
 }
 
-void Player::wygrana(Enemy e)
+bool Player::wygrana(Enemy e)
 {
     cout << nazwa << " wygrywa pojedynek!\n";
+    Sleep(1000);
     Player::level_up(e);
+    return true;
 }
 
 bool Player::czy_martwy()
@@ -185,5 +190,6 @@ void Player::czar()
     else
     {
         cout << "Brak many!\n";
+        mana = 0;
     }
 }
