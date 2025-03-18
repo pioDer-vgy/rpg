@@ -1,3 +1,3 @@
 ﻿# RPG
 
-A silmple rpg fight system, ractise for OOP
+A silmple rpg fight system, practise for OOP
